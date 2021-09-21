@@ -52,7 +52,9 @@ export default function Layout({ title, description, children }) {
   return (
     <div>
       <Head>
-        <title>{title ? `${title} - Next Amazona` : 'Next Amazona'}</title>
+        <title>
+          {title ? `${title} - Next.js E-Commerce` : 'Next.js E-Commerce'}
+        </title>
         {description && <meta name="description" content={description}></meta>}
       </Head>
       <ThemeProvider theme={theme}>
@@ -61,7 +63,9 @@ export default function Layout({ title, description, children }) {
           <Toolbar>
             <NextLink href="/" passHref>
               <Link>
-                <Typography className={classes.brand}>amazona</Typography>
+                <Typography className={classes.brand}>
+                  Next.js E-Commerce
+                </Typography>
               </Link>
             </NextLink>
             <div className={classes.grow}></div>
@@ -92,7 +96,7 @@ export default function Layout({ title, description, children }) {
         </AppBar>
         <Container className={classes.main}>{children}</Container>
         <footer className={classes.footer}>
-          <Typography>All rights reserved. Next Amazona.</Typography>
+          <Typography>All rights reserved. Next.js E-Commerce.</Typography>
         </footer>
       </ThemeProvider>
     </div>
