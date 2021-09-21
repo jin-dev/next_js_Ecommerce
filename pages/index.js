@@ -8,29 +8,35 @@ import {
   Grid,
   Typography,
 } from '@material-ui/core';
+import NextLink from 'next/link';
 import Layout from '../components/Layout';
-import data from '../utils/data';
+import Product from '../models/Product';
+import db from '../utils/db';
 
-export default function Home() {
+export default function Home(props) {
+  const { products } = props;
+
   return (
     <Layout>
       <div>
         <h1>Product</h1>
 
         <Grid container spacing={3}>
-          {data.products.map((product) => (
+          {products.map((product) => (
             <Grid item md={4} key={product.name}>
               <Card>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    image={product.image}
-                    title={product.name}
-                  ></CardMedia>
-                  <CardContent>
-                    <Typography>{product.name}</Typography>
-                  </CardContent>
-                </CardActionArea>
+                <NextLink href={`/product/${product.slug}`} passHref>
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      image={product.image}
+                      title={product.name}
+                    ></CardMedia>
+                    <CardContent>
+                      <Typography>{product.name}</Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </NextLink>
                 <CardActions>
                   <Typography>${product.price}</Typography>
                   <Button size="small" color="primary">
@@ -44,4 +50,15 @@ export default function Home() {
       </div>
     </Layout>
   );
+}
+
+export async function getServerSideProps() {
+  await db.connect();
+  const products = await Product.find({}).lean();
+  await db.disconnect();
+  return {
+    props: {
+      products: products.map(db.convertDocToObj),
+    },
+  };
 }
