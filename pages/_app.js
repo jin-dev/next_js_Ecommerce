@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import '../styles/globals.css';
 import { StoreProvider } from '../utils/Store';
@@ -8,6 +9,9 @@ function MyApp({ Component, pageProps }) {
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
+
+    Cookies.remove('UserInfo');
+    Cookies.remove('cartItems');
   }, []);
 
   return (
